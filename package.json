@@ -1,0 +1,10 @@
+{
+  "name": "portfolio-playwright",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {},
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}
+
