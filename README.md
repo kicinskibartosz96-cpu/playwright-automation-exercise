@@ -22,18 +22,23 @@ W projekcie zastosowano wzorzec **Page Object Model (POM)**. Lokatory oraz akcje
 
 ---
 
-## Zakres Testów
+## Zakres Testów i Pokrycie Scenariuszy
 
-### Testy E2E (UI)
-1. **Rejestracja użytkownika:** Walidacja pełnego procesu zakładania nowego konta.
-2. **Autoryzacja (Logowanie):** 
-   * *Ścieżka pozytywna:* Logowanie poprawnymi danymi i weryfikacja stanu sesji.
-   * *Ścieżka negatywna:* Próba logowania z błędnym hasłem i walidacja komunikatu o błędzie.
-3. **Proces zakupowy (Koszyk):** Logowanie, nawigacja do katalogu, dodanie produktu do koszyka z obsługą okien modalnych i weryfikacja zawartości koszyka.
+Projekt dąży do maksymalnego sparowania testów na poziomie interfejsu użytkownika (UI) oraz procesów w tle (API). 
 
-### Testy API
-* Weryfikacja endpointów backendowych bez uruchamiania przeglądarki (`@playwright/test` request).
-* Walidacja statusów odpowiedzi (200 OK) oraz struktury obiektów JSON (obecność kontraktu danych).
+### Testy E2E (UI) - Pełne Pokrycie Frontendu
+1. **Rejestracja użytkownika:** Walidacja pełnego procesu zakładania konta w przeglądarce.
+2. **Autoryzacja (Logowanie):** Ścieżka pozytywna (poprawne dane) oraz negatywna (błędne hasło).
+3. **Proces zakupowy (Koszyk):** Pełna interakcja: wybór produktu, obsługa okien modalnych i weryfikacja zawartości koszyka.
+
+### Testy API - Pokrycie Logiki Backendowej
+1. **Pobieranie danych (GET):** Walidacja endpointu `/api/productsList` pod kątem kodu statusu HTTP 200 OK oraz integralności struktury obiektów JSON.
+2. **Zarządzanie użytkownikiem (POST):** Pełna weryfikacja procesu tworzenia profilu oraz autoryzacji poprzez wysyłanie surowych żądań HTTP (odpowiednik testów UI rejestracji oraz logowania) przy użyciu dynamicznych adresów e-mail.
+
+
+### Ograniczenia Techniczne (Technical Limitations)
+* **Proces koszyka (Dodawanie produktów):** Architektura platformy *Automation Exercise* nie udostępnia publicznych endpointów API dla obsługi koszyka zakupowego (system operuje wyłącznie na ciasteczkach i sesji przeglądarki). Z tego powodu scenariusz ten **nie został celowo zduplikowany w warstwie API** i jest w 100% pokryty niezawodnymi testami w warstwie UI (E2E).
+
 
 ---
 
@@ -47,7 +52,7 @@ Projekt posiada skonfigurowany pipeline automatyzacji w **GitHub Actions**. Przy
 
 ### 1. Klonowanie repozytorium
 ```bash
-git clone https://github.com/kicinskibartosz96-cpu/playwright-automation-exercise
+git clone https://github.com
 cd playwright-automation-exercise
 ```
 
@@ -56,24 +61,24 @@ cd playwright-automation-exercise
 npm install
 ```
 
-### 3. Instalacja przeglądarek Playwright
-```bash
-npx playwright install
-```
+### 3. Uruchamianie testów
 
-### 4. Uruchamianie testów
-
-* **Wszystkie testy w tle (tryb headless):**
+* **Uruchomienie wszystkich testów (UI + API) w tle:**
   ```bash
   npx playwright test
   ```
 
-* **Testy w trybie graficznym (Interactive UI Mode):**
+* **Uruchomienie tylko testów funkcjonalnych (UI):**
   ```bash
-  npx playwright test --ui
+  npx playwright test tests-ui/
   ```
 
-* **Uruchomienie tylko testów API:**
+* **Uruchomienie tylko testów integracyjnych (API):**
   ```bash
-  npx playwright test tests/api.spec.js
+  npx playwright test tests-api/
+  ```
+
+* **Uruchomienie testów w trybie interaktywnym (UI Mode):**
+  ```bash
+  npx playwright test --ui
   ```
