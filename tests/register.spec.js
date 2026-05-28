@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { RegisterPage } from '../pages/RegisterPage'; // Importujemy naszą osobną stronę rejestracji
+import { RegisterPage } from '../pages/registerpage'; // Importujemy naszą osobną stronę rejestracji
 
 test.describe('Testy Rejestracji Nowego Użytkownika', () => {
 
