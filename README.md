@@ -52,7 +52,7 @@ Projekt posiada skonfigurowany pipeline automatyzacji w **GitHub Actions**. Przy
 
 ### 1. Klonowanie repozytorium
 ```bash
-git clone https://github.com
+git clone https://github.com/kicinskibartosz96-cpu/playwright-automation-exercise
 cd playwright-automation-exercise
 ```
 
