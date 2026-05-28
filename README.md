@@ -39,6 +39,8 @@ Projekt dąży do maksymalnego sparowania testów na poziomie interfejsu użytko
 ### Ograniczenia Techniczne (Technical Limitations)
 * **Proces koszyka (Dodawanie produktów):** Architektura platformy *Automation Exercise* nie udostępnia publicznych endpointów API dla obsługi koszyka zakupowego (system operuje wyłącznie na ciasteczkach i sesji przeglądarki). Z tego powodu scenariusz ten **nie został celowo zduplikowany w warstwie API** i jest w 100% pokryty niezawodnymi testami w warstwie UI (E2E).
 
+* **Proces autoryzacji API (verifyLogin):** Zapora sieciowa (WAF/Cloudflare) platformy *Automation Exercise* blokuje zapytania typu POST wysyłane z puli adresów IP serwerów GitHub Actions, zwracając kod 403 Forbidden. Testy logowania API zostały celowo oznaczone jako `test.skip()`, aby zapewnić stabilność potoku CI/CD, a sam proces logowania jest w pełni weryfikowany w warstwie UI (`auth.spec.js`).
+
 
 ---
 
